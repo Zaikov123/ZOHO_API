@@ -1,8 +1,7 @@
 <script setup>
+import router from '../router.js'
 
-import {ref} from "vue";
-
-const isAuthenticated = ref(false);
+router.push({name: 'deal.index'})
 
 </script>
 

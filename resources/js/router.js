@@ -2,11 +2,6 @@ import { createMemoryHistory, createRouter } from 'vue-router'
 
 const routes = [
     {
-        path: '/',
-        name: 'zoho.form',
-        component: () => import('./components/zoho/ZohoForm.vue')
-    },
-    {
         path: '/account/create',
         name: 'account.create',
         component: () => import('./components/accounts/CreateComponent.vue')
