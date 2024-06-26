@@ -19,8 +19,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix'=>'zoho'],function(){
-    Route::get('/deal', [ZohoController::class, 'getDeals']);
-    Route::post('/deal', [ZohoController::class, 'createDeal']);
-    Route::post('/account', [ZohoController::class, 'createAccount']);
+Route::group(['prefix' => 'zoho'], function () {
+    Route::group(['prefix' => 'deal'], function () {
+        Route::get('/', [ZohoController::class, 'getDeals']);
+        Route::post('/', [ZohoController::class, 'createDeal']);
+
+    });
+    Route::group(['prefix' => 'account'], function () {
+        Route::get('/', [ZohoController::class, 'getAccounts']);
+        Route::post('/', [ZohoController::class, 'createAccount']);
+
+    });
 });

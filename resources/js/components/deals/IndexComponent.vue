@@ -5,12 +5,14 @@
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Stage</th>
+            <th scope="col">Account</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="deal in deals" :key="deal.id">
             <td>{{ deal.Deal_Name }}</td>
             <td>{{ deal.Stage }}</td>
+            <td>{{ deal.Account_Name.name }}</td>
         </tr>
         </tbody>
     </table>
@@ -27,6 +29,7 @@ const deals = ref([]);
 onMounted(async () => {
     try {
         const response = await store.dispatch('deals/getDeals');
+
         deals.value = response.data;
     } catch (error) {
         console.error('Error fetching deals:', error);

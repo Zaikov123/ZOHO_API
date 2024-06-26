@@ -60,6 +60,23 @@ const actions = {
             commit('setMessage', 'Error creating records');
         }
     },
+    async getAccounts(){
+        try {
+
+            console.log('Collecting accounts data');
+            let getAccountsResponse = await axios.get('/api/zoho/account')
+            console.log('Get accounts response:', getAccountsResponse.data);
+
+            if (getAccountsResponse.data) {
+                return getAccountsResponse.data;
+            } else {
+                console.error('Error getting accounts');
+            }
+        }catch (error){
+            console.error('Error getting records:', error);
+            console.log('Error response:', error.response);
+        }
+    },
     validateForm(getters){
         return (
             getters['account/validateAccountName'] && getters['account/validateAccountPhone'] && getters['account/validateAccountWebsite']

@@ -4,7 +4,8 @@ import router from "../../router.js";
 const state = {
     deal: {
         deal_name: '',
-        deal_stage: ''
+        deal_stage: '',
+        account: {name: '', id: ''}
     },
     submitted: false,
     message: ''
@@ -43,7 +44,7 @@ const actions = {
 
             if (dealResponse.data) {
                 commit('setMessage', 'Records successfully created')
-                commit('setDeal', { deal_name: '', deal_stage: '' })
+                commit('setDeal', { deal_name: '', deal_stage: '', account: {name: '', id: ''}})
                 // await router.push({name: 'deal.index'})
             } else {
                 commit('setMessage', 'Error creating records');
@@ -57,7 +58,7 @@ const actions = {
     async getDeals(){
         try {
 
-            console.log('Collecting deal data:', state.deal);
+            console.log('Collecting deal data:');
             let getDealsResponse = await axios.get('/api/zoho/deal')
             console.log('Get deal response:', getDealsResponse.data);
 

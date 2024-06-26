@@ -14,6 +14,14 @@
                        :class="{ 'is-invalid': !validateDealStage && submitted }" required/>
                 <div class="invalid-feedback" v-if="submitted && !validateDealStage">Deal Stage is required</div>
             </div>
+            <div class="form-group">
+                <label for="deal_stage">Account:</label>
+                <select class="form-select" v-model="deal.account">
+                    <option selected>Choose account</option>
+                    <option v-for="account in accounts" :key="account.id" :value="account">{{ account.Account_Name }}</option>
+                </select>
+            </div>
+
             <button type="submit" class="btn btn-primary" @click="submitted = true">Submit</button>
         </form>
         <div v-if="message" class="mt-3">{{ message }}</div>
@@ -23,14 +31,15 @@
 
 <script setup>
 
-import {computed, watch} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import {useStore} from "vuex";
 
 const store = useStore();
 
-const deal = computed(() => store.getters['deals/deal'])
-const message = computed(() => store.getters['deals/message'])
-const submitted = computed(() => store.getters['deals/submitted'])
+const accounts = ref([]);
+const deal = computed(() => store.getters['deals/deal']);
+const message = computed(() => store.getters['deals/message']);
+const submitted = computed(() => store.getters['deals/submitted']);
 const validateDealName = computed(() => store.getters['deals/validateDealName']);
 const validateDealStage = computed(() => store.getters['deals/validateDealStage']);
 
@@ -48,6 +57,15 @@ watch(() => submitted.value, (newVal) => {
     }
 });
 
+onMounted(async () => {
+    try {
+        const response = await store.dispatch('account/getAccounts');
+        accounts.value = response.data;
+        console.log(accounts.value);
+    } catch (error) {
+        console.error('Error fetching accounts:', error);
+    }
+});
 </script>
 
 <style scoped>
